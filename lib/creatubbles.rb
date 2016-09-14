@@ -33,6 +33,7 @@ end
 
 require "creatubbles/creation"
 require "creatubbles/creations"
+require "creatubbles/upload"
 require "creatubbles/gallery"
 require "creatubbles/galleries"
 

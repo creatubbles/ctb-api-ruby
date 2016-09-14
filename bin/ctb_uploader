@@ -45,6 +45,10 @@ opt_parser = OptionParser.new do |opt|
     creation_details[:description] = text
   end
 
+  opt.on("-c","--creation CREATION_ID","upload for existing creation instead of creating new one") do |creation_id|
+    creation_details[:id] = creation_id
+  end
+
   opt.on("-g","--gallery GALLERY_ID","add creation to gallery") do |gallery_id|
     galleries << gallery_id
   end
@@ -58,16 +62,32 @@ opt_parser.parse!
 
 if (file=ARGV[0])
   client = Creatubbles::Client.new(auth_details)
-  creation = client.creations.create(creation_details)
-  puts "created creation #{creation.id}"
-  creation.upload(file)
+  if creation_details[:id]
+    creation = client.creations.find(creation_details[:id])
+    puts "uploading for existing creation #{creation.id}"
+  else
+    creation = client.creations.create(creation_details)
+    puts "created creation #{creation.id}"
+  end
+  upload = creation.upload(file)
   puts " - uploaded #{file}"
   galleries.each do |gallery_id|
     gallery = client.galleries.find(gallery_id)
     gallery.add_creation(creation)
     puts " - added to gallery #{gallery_id}"
   end
-  puts "done."
+  print "processing.."
+  while (upload.reload.processing?)
+    print "."
+    sleep 2
+  end
+  print " "
+  if upload.aborted?
+    puts upload.aborted_with
+    puts "processing details: #{upload.processing_details.inspect}" if upload.processing_details
+  else
+    puts "done"
+  end
 else
   puts opt_parser
 end

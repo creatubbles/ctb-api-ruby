@@ -13,7 +13,7 @@ class Creatubbles::BaseObject
     atts.each do |att|
       class_eval <<-EOM, __FILE__, __LINE__ + 1
         def #{att}
-          @data['attributes'][att]
+          @data['attributes']['#{att}']
         end
       EOM
     end
@@ -30,5 +30,10 @@ class Creatubbles::BaseObject
 
   def inspect
     @data.inspect
+  end
+
+  def reload
+    @data = @connection.get("#{self.class.type_name}/#{id}").parsed['data']
+    self
   end
 end

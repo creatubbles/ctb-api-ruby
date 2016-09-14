@@ -29,13 +29,11 @@ class Creatubbles::Creation < Creatubbles::BaseObject
 
   def upload(file)
     extension = File.extname(file)[1..-1]
-    res = @connection.post("creations/#{@data['id']}/uploads", :params => { 'extension' => extension })
-    upload = res.parsed['data']['attributes']
-    upload_url = URI.parse(upload['url'])
-    Net::HTTP.start(upload_url.host) do |http|
-      http.send_request("PUT", upload_url.request_uri, IO.read(file), "content-type" => upload['content_type'])
-    end
-    @connection.put(upload['ping_url'])
+    res = @connection.post("creations/#{id}/uploads", :params => { 'extension' => extension })
+    upload = Creatubbles.instantiate_object_from_response(res, @connection)
+    upload.upload(file)
+    upload.ping
+    upload
   end
 
 end
