@@ -29,6 +29,13 @@ module Creatubbles
     object_class(object_data['type']).new(connection, object_data)
   end
 
+  def self.instantiate_objects_from_response(response, connection)
+    list_data = response.parsed['data']
+    list_data.map do |object_data|
+      object_class(object_data['type']).new(connection, object_data)
+    end
+  end
+
 end
 
 require "creatubbles/creation"
@@ -36,5 +43,7 @@ require "creatubbles/creations"
 require "creatubbles/upload"
 require "creatubbles/gallery"
 require "creatubbles/galleries"
+require "creatubbles/user"
+require "creatubbles/users"
 
 require "creatubbles/client"
