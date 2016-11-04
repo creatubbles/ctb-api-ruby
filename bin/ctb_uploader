@@ -34,7 +34,7 @@ opt_parser = OptionParser.new do |opt|
   opt.on("-u","--username EMAIL","user's email") do |email|
     auth_details[:username] = email
   end
-  opt.on("-p","--password password","user's password") do |password|
+  opt.on("-p","--password PASSWORD","user's password") do |password|
     auth_details[:password] = password
   end
 
