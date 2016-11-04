@@ -29,7 +29,7 @@ Environment
 
 Options
     -u, --username EMAIL             user's email
-    -p, --password password          user's password
+    -p, --password PASSWORD          user's password
     -n, --name NAME                  creation name
     -d, --description TEXT           description text
     -g, --gallery GALLERY_ID         add creation to gallery
@@ -41,3 +41,7 @@ It's recommended to set the required credentials in the enviroment:
 - `CREATUBBLES_CLIENT_ID`, `CREATUBBLES_CLIENT_SECRET`: the OAuth client ID and secret
 - `CREATUBBLES_USERNAME`, `CREATUBBLES_PASSWORD`: the user's email and password for login (actually optional for using the API - but uploading requires user credentials, soe make sure to supply them)
 - `CREATUBBLES_API_URL`: you usually won't need to change.
+
+## Ruby version
+
+Supported Ruby versions: 2.3.1
