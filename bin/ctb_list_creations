@@ -1,0 +1,51 @@
+#!/usr/bin/env ruby
+
+$:.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
+
+require 'optparse'
+require 'creatubbles'
+require 'pp'
+
+auth_details = {
+  client_id: ENV['CREATUBBLES_CLIENT_ID'],
+  client_secret: ENV['CREATUBBLES_CLIENT_SECRET'],
+  api_url: ENV['CREATUBBLES_API_URL'] || Creatubbles::DEFAULT_API_URL,
+  username: ENV['CREATUBBLES_USERNAME'],
+  password: ENV['CREATUBBLES_PASSWORD']
+}
+
+opt_parser = OptionParser.new do |opt|
+  opt.banner = "Usage: ctb_list_creators [OPTIONS]"
+  opt.separator  ""
+  opt.separator  "Environment"
+  opt.separator  "     CREATUBBLES_CLIENT_ID: application client ID"
+  opt.separator  "     CREATUBBLES_CLIENT_SECRET: application client secret"
+  opt.separator  "     CREATUBBLES_USERNAME: user's email"
+  opt.separator  "     CREATUBBLES_PASSWORD: user's password"
+  opt.separator  "     CREATUBBLES_API_URL: API URL (default: #{Creatubbles::DEFAULT_API_URL})"
+  opt.separator  ""
+  opt.separator  "Options"
+
+  opt.on("-u","--username EMAIL","user's email") do |email|
+    auth_details[:username] = email
+  end
+  opt.on("-p","--password password","user's password") do |password|
+    auth_details[:password] = password
+  end
+
+  opt.on("-h","--help","help") do
+    puts opt_parser
+  end
+end
+
+opt_parser.parse!
+
+if auth_details[:username] && auth_details[:password]
+  client = Creatubbles::Client.new(auth_details)
+  me = client.users.me
+  me.creations.each do |creation|
+    puts "#{creation.id} - #{creation.name}"
+  end
+else
+  puts opt_parser
+end
