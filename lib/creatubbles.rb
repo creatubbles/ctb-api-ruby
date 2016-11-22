@@ -45,5 +45,7 @@ require "creatubbles/gallery"
 require "creatubbles/galleries"
 require "creatubbles/user"
 require "creatubbles/users"
+require "creatubbles/partner_application"
+require "creatubbles/partner_applications"
 
 require "creatubbles/client"

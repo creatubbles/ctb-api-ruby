@@ -14,6 +14,9 @@ auth_details = {
   password: ENV['CREATUBBLES_PASSWORD']
 }
 
+list_for = nil
+list_for_id = nil
+
 opt_parser = OptionParser.new do |opt|
   opt.banner = "Usage: ctb_list_creators [OPTIONS]"
   opt.separator  ""
@@ -33,6 +36,20 @@ opt_parser = OptionParser.new do |opt|
     auth_details[:password] = password
   end
 
+  opt.on("--user id","list creations for user id (use 'me' for logged in user)") do |user_id|
+    list_for = :users
+    list_for_id = user_id
+  end
+
+  opt.on("--app slug","partner application") do |app_slug|
+    list_for = :partner_applications
+    list_for_id = app_slug
+  end
+
+  opt.on("--recent","list recent creations (default)") do
+    list_for = nil
+  end
+
   opt.on("-h","--help","help") do
     puts opt_parser
     exit
@@ -43,8 +60,16 @@ opt_parser.parse!
 
 if auth_details[:username] && auth_details[:password]
   client = Creatubbles::Client.new(auth_details)
-  me = client.users.me
-  me.creations.each do |creation|
+
+  creations =
+    if list_for
+      base = client.send(list_for).find(list_for_id)
+      base.creations
+    else
+      client.creations.recent
+    end
+
+  creations.each do |creation|
     puts "#{creation.id} - #{creation.name}"
   end
 else
