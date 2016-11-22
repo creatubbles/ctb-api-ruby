@@ -17,4 +17,8 @@ class Creatubbles::User < Creatubbles::BaseObject
     updated_at
   ]
 
+  def creators
+    res = @connection.get("users/#{id}/creators")
+    Creatubbles.instantiate_objects_from_response(res, @connection)
+  end
 end

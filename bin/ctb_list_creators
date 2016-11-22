@@ -42,7 +42,8 @@ opt_parser.parse!
 
 if auth_details[:username] && auth_details[:password]
   client = Creatubbles::Client.new(auth_details)
-  client.users.all_creators.each do |user|
+  me = client.users.me
+  me.creators.each do |user|
     puts "#{user.id} - #{user.display_name}"
   end
 else
