@@ -37,9 +37,8 @@ class Creatubbles::PartnerApplication < Creatubbles::BaseObject
     updated_at
   ]
 
-  # TODO update API endpoint
   def creations
-    res = @connection.get("creations?partner_application_id=#{slug}")
+    res = @connection.get("partner_applications/#{slug}/creations")
     Creatubbles.instantiate_objects_from_response(res, @connection)
   end
 end

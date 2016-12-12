@@ -22,9 +22,8 @@ class Creatubbles::User < Creatubbles::BaseObject
     Creatubbles.instantiate_objects_from_response(res, @connection)
   end
 
-  # TODO update API endpoint
   def creations
-    res = @connection.get("creations?user_id=#{id}")
+    res = @connection.get("users/#{id}/creations")
     Creatubbles.instantiate_objects_from_response(res, @connection)
   end
 end
