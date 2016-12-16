@@ -3,12 +3,13 @@ require "oauth2"
 class Creatubbles::Client
   attr_writer :api_url, :username, :password
 
-  def initialize(client_id: nil, client_secret: nil, username: nil, password: nil, api_url: Creatubbles::DEFAULT_API_URL)
+  def initialize(client_id: nil, client_secret: nil, username: nil, password: nil, api_url: Creatubbles::DEFAULT_API_URL, scope: nil)
     @client_id = client_id
     @client_secret = client_secret
     @username = username
     @password = password
     @api_url = api_url
+    @scope = scope
   end
 
   def connection
@@ -32,9 +33,9 @@ class Creatubbles::Client
   def get_oauth_token
     oauth = OAuth2::Client.new(@client_id, @client_secret, site: @api_url)
     if @username && @password
-      oauth.password.get_token(@username, @password)
+      oauth.password.get_token(@username, @password, scope: @scope)
     else
-      oauth.client_credentials.get_token
+      oauth.client_credentials.get_token(scope: @scope)
     end
   end
 end
