@@ -1,0 +1,16 @@
+<div class="page-header">
+  <h2><%= @title %></h2>
+</div>
+<ul class="media-list">
+  <% @creations.each do |c| %>
+    <li class="media">
+      <div class="media-left">
+        <img class="media-object" src="<%= c.image['links']['list_view'] %>" alt="<%= c.name %>" width="128" height="128">
+      </div>
+      <div class="media-body">
+        <h4 class="media-heading"><%= c.name %></h4>
+        <p><%= c.reflection_text %></p>
+      </div>
+    </li>
+  <% end %>
+</ul>
