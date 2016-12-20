@@ -16,6 +16,14 @@ class Creatubbles::Client
     @connection ||= get_oauth_token
   end
 
+  def connect!(hash)
+    @connection = OAuth2::AccessToken.from_hash(oauth_client, hash)
+  end
+
+  def connection_hash
+    @connection&.to_hash
+  end
+
   def disconnect!
     @connection = nil
   end
@@ -28,14 +36,25 @@ class Creatubbles::Client
     EOM
   end
 
+  def start_code_flow(redirect_uri='urn:ietf:wg:oauth:2.0:oob')
+    oauth_client.auth_code.authorize_url(redirect_uri: redirect_uri)
+  end
+
+  def complete_code_flow(code_value, redirect_uri='urn:ietf:wg:oauth:2.0:oob')
+    @connection = oauth_client.auth_code.get_token(code_value, redirect_uri: redirect_uri)
+  end
+
   private
 
   def get_oauth_token
-    oauth = OAuth2::Client.new(@client_id, @client_secret, site: @api_url)
     if @username && @password
-      oauth.password.get_token(@username, @password, scope: @scope)
+      oauth_client.password.get_token(@username, @password, scope: @scope)
     else
-      oauth.client_credentials.get_token(scope: @scope)
+      oauth_client.client_credentials.get_token(scope: @scope)
     end
+  end
+
+  def oauth_client
+    @oauth_client ||= OAuth2::Client.new(@client_id, @client_secret, site: @api_url)
   end
 end
