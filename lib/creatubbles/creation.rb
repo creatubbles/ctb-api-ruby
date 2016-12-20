@@ -24,8 +24,13 @@ class Creatubbles::Creation < Creatubbles::BaseObject
     obj_file_url
     play_iframe_url
     created_at
+    tags
     updated_at
   ]
+
+  def update_tags(tags)
+    @connection.put("creations/#{id}", :params => { 'tags' => tags })
+  end
 
   def upload(file)
     extension = File.extname(file)[1..-1]
