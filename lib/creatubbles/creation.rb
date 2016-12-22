@@ -29,7 +29,7 @@ class Creatubbles::Creation < Creatubbles::BaseObject
   ]
 
   def update_tags(tags)
-    @connection.put("creations/#{id}", :params => { 'tags' => tags })
+    @connection.put("creations/#{id}", :body => { 'data' => { 'type' => 'creations', 'attributes': {'tags' => tags }}})
   end
 
   def upload(file)

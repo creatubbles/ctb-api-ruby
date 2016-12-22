@@ -21,7 +21,7 @@ class Creatubbles::Client
   end
 
   def connection_hash
-    @connection&.to_hash
+    @connection.to_hash
   end
 
   def disconnect!
