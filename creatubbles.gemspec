@@ -13,7 +13,7 @@ spec = Gem::Specification.new do |s|
   s.homepage = 'https://gitub.com/creatubbles/ctb-api-ruby'
   s.license = 'MIT'
 
-  s.add_dependency('oauth2', '>= 1.2.0')
+  s.add_dependency('oauth2', '>= 1.3.0')
 
   s.files = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- test/*`.split("\n")
