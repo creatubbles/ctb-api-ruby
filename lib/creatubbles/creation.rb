@@ -1,7 +1,6 @@
 require "creatubbles/base_object"
 
 class Creatubbles::Creation < Creatubbles::BaseObject
-
   define_type_name 'creations'
   define_attributes %w[
     name
@@ -27,6 +26,8 @@ class Creatubbles::Creation < Creatubbles::BaseObject
     tags
     updated_at
   ]
+
+  define_relationships %w[user creators]
 
   def update_tags(tags)
     @connection.put("creations/#{id}", :body => { 'data' => { 'type' => 'creations', 'attributes': {'tags' => tags }}})

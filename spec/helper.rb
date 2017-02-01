@@ -10,9 +10,7 @@ RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
-end
 
-
-RSpec.configure do |conf|
-  include CreationJson
+  config.include CreationJson
+  config.include UserJson
 end
