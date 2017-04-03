@@ -38,4 +38,30 @@ describe Creatubbles::Creation do
       expect(subject.creators).to eq ['xUt6Feou']
     end
   end
+
+  describe 'add_tags' do
+    it "should trigger post on connection with correct params" do
+      expect(connection).to receive(:post).with(
+        "creations/#{subject.id}/tags", {
+          body: {
+            data: [
+              { type: "tags", id: "a" },
+              { type: "tags", id: "b" }
+            ]}})
+      subject.add_tags(['a', 'b'])
+    end
+  end
+
+  describe 'remove_tags' do
+    it "should trigger post on connection with correct params" do
+      expect(connection).to receive(:delete).with(
+        "creations/#{subject.id}/tags", {
+          body: {
+            data: [
+              { type: "tags", id: "a" },
+              { type: "tags", id: "b" }
+            ]}})
+      subject.remove_tags(['a', 'b'])
+    end
+  end
 end
