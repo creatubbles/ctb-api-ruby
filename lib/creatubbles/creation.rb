@@ -33,6 +33,16 @@ class Creatubbles::Creation < Creatubbles::BaseObject
     @connection.put("creations/#{id}", :body => { 'data' => { 'type' => 'creations', 'attributes': {'tags' => tags }}})
   end
 
+  def add_tags(tags)
+    tags_data = tags.map { |tag| {type: 'tags', id: tag} }
+    @connection.post("creations/#{id}/tags", body: { data: tags_data })
+  end
+
+  def remove_tags(tags)
+    tags_data = tags.map { |tag| {type: 'tags', id: tag} }
+    @connection.delete("creations/#{id}/tags", body: { data: tags_data })
+  end
+
   def upload(file)
     extension = File.extname(file)[1..-1]
     res = @connection.post("creations/#{id}/uploads", :params => { 'extension' => extension })
