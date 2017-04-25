@@ -14,4 +14,9 @@ class Creatubbles::Creations < Creatubbles::BaseCollection
     res = @connection.post('creations', :params => { 'name' => name, 'reflection_text' => description })
     Creatubbles.instantiate_object_from_response(res, @connection)
   end
+  
+  def find_by_ids(ids)
+    res = @connection.get("creations?filter[ids]=#{ids.join(',')}")
+    Creatubbles.instantiate_objects_from_response(res, @connection)
+  end
 end
