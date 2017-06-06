@@ -4,7 +4,7 @@ class Creatubbles::Creations < Creatubbles::BaseCollection
 
   define_type_name 'creations'
 
-  def index params
+  def index params={}
     init_objects @connection.get("creations?handle_params(params)")
   end
 
@@ -21,7 +21,7 @@ class Creatubbles::Creations < Creatubbles::BaseCollection
   end
 
   def by_partner_application partner_application_id
-    init_objects @connection.get("by_partner_application/#{partner_application_id}/creations")
+    init_objects @connection.get("partner_applications/#{partner_application_id}/creations")
   end
 
   def recommended_for_creation creation_id
