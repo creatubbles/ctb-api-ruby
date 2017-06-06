@@ -4,9 +4,8 @@ class Creatubbles::Contents < Creatubbles::BaseCollection
 
   define_type_name 'contents'
 
-  def index  params_hash = {"query": nil}
-    params_hash.stringify_keys!.slice!("query")
-    init_objects @connection.get("contents?#{params_hash.to_param}")
+  def index params = {}
+    init_objects @connection.get("contents?#{handle_params(params)}")
   end
 
   def recent
@@ -23,6 +22,14 @@ class Creatubbles::Contents < Creatubbles::BaseCollection
 
   def followed
     init_objects @connection.get('contents/followed')
+  end
+
+  def by_user user_id
+    init_objects @connection.get("users/#{user_id}/contents")
+  end
+
+  def bubbled_by_user user_id
+    init_objects @connection.get("users/#{user_id}/bubbled_contents")
   end
 
 end
