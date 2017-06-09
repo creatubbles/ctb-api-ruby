@@ -4,19 +4,39 @@ class Creatubbles::Creations < Creatubbles::BaseCollection
 
   define_type_name 'creations'
 
-  # TODO update API endpoint
+  def index params={}
+    init_objects @connection.get("creations?#{handle_params(params)}")
+  end
+
   def recent
-    res = @connection.get("creations")
-    Creatubbles.instantiate_objects_from_response(res, @connection)
+    init_objects @connection.get("creations")
+  end
+
+  def from_gallery gallery_id
+    init_objects @connection.get("galleries/#{gallery_id}/creations")
+  end
+
+  def by_user user_id
+    init_objects @connection.get("users/#{user_id}/creations")
+  end
+
+  def by_partner_application partner_application_id
+    init_objects @connection.get("partner_applications/#{partner_application_id}/creations")
+  end
+
+  def recommended_for_creation creation_id
+    init_objects @connection.get("creations/#{creation_id}/recommended_creations")
+  end
+
+  def recommended_for_user user_id
+    init_objects @connection.get("users/#{user_id}/recommended_creations")
   end
 
   def create(name: nil, description: nil)
-    res = @connection.post('creations', :params => { 'name' => name, 'reflection_text' => description })
-    Creatubbles.instantiate_object_from_response(res, @connection)
+    init_objects @connection.post('creations', :params => { 'name' => name, 'reflection_text' => description })
   end
-  
+
   def find_by_ids(ids)
-    res = @connection.get("creations?filter[ids]=#{ids.join(',')}")
-    Creatubbles.instantiate_objects_from_response(res, @connection)
+    init_objects @connection.get("creations?filter[ids]=#{ids.join(',')}")
   end
 end

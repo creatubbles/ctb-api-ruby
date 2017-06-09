@@ -36,12 +36,18 @@ class Creatubbles::User < Creatubbles::BaseObject
   define_relationships %w[school custom_style]
 
   def creators
-    res = @connection.get("users/#{id}/creators")
-    Creatubbles.instantiate_objects_from_response(res, @connection)
+    init_objects @connection.get("users/#{id}/creators")
   end
 
   def creations
-    res = @connection.get("users/#{id}/creations")
-    Creatubbles.instantiate_objects_from_response(res, @connection)
+    init_objects @connection.get("users/#{id}/creations")
+  end
+
+  def contents
+    init_objects @connection.get("users/#{id}/contents")
+  end
+
+  def bubbled_contents
+    init_objects @connection.get("users/#{id}/bubbled_contents")
   end
 end

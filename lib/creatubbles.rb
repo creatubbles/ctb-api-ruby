@@ -20,6 +20,10 @@ module Creatubbles
     @type_object_classes[type_name] = object_class
   end
 
+  def self.type_object_classes
+    @type_object_classes
+  end
+
   def self.object_class(type_name)
     @type_object_classes[type_name] || raise("unknown type: #{type_name}")
   end
@@ -38,6 +42,8 @@ module Creatubbles
 
 end
 
+require "creatubbles/content"
+require "creatubbles/contents"
 require "creatubbles/creation"
 require "creatubbles/creations"
 require "creatubbles/upload"
