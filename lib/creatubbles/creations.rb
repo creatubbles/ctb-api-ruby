@@ -5,7 +5,7 @@ class Creatubbles::Creations < Creatubbles::BaseCollection
   define_type_name 'creations'
 
   def index params={}
-    init_objects @connection.get("creations?handle_params(params)")
+    init_objects @connection.get("creations?#{handle_params(params)}")
   end
 
   def recent
