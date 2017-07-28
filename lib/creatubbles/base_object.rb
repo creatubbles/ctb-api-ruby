@@ -66,7 +66,7 @@ class Creatubbles::BaseObject
     self
   end
 
-  def init_objects response
+  def init_objects(response)
     Creatubbles.instantiate_objects_from_response(response, @connection)
   end
 end
