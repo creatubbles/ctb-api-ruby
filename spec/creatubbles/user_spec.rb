@@ -1,4 +1,4 @@
-require 'helper'
+require 'spec_helper'
 
 describe Creatubbles::User do
   let(:client) { Creatubbles::Client.new }
