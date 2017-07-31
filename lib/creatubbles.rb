@@ -42,6 +42,7 @@ module Creatubbles
 
 end
 
+require "creatubbles/error"
 require "creatubbles/utils/auth_details"
 require "creatubbles/content"
 require "creatubbles/contents"

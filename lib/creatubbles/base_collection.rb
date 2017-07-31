@@ -13,15 +13,21 @@ class Creatubbles::BaseCollection
     @connection = connection
   end
 
-  def find(id,opts={nil_404:false})
+  def find(id)
     res = @connection.get("#{self.class.type_name}/#{id}")
     Creatubbles.instantiate_object_from_response(res, @connection)
   rescue => e
-    if opts[:nil_404] && is_record_not_found_404?(e)
-      return nil
+    if is_record_not_found_404?(e)
+      raise Creatubbles::Error::RecordNotFound.new(e), "Not Found! #{self.class.type_name}/#{id}"
     else
       raise e
     end
+  end
+
+  def find_by_id(id)
+    find(id)
+  rescue Creatubbles::Error::RecordNotFound
+    return nil
   end
 
   def init_objects(response)
