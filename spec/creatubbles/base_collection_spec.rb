@@ -10,5 +10,8 @@ RSpec.describe Creatubbles::BaseCollection do
 
     expect{client.test_objects.find('non-existing-object-id', nil_404:true)}.
       not_to raise_error
+
+    expect(client.test_objects.find('non-existing-object-id', nil_404:true)).
+      to be_nil
   end
 end
