@@ -3,6 +3,16 @@ require "oauth2"
 class Creatubbles::Client
   attr_writer :api_url, :username, :password
 
+  def self.new_from_env
+    auth_details = Creatubbles::Utils::AuthDetails.from_env
+    missing = auth_details.select{|_k,v| ['',nil].include?(v) }
+    if missing.empty?
+      new(auth_details)
+    else
+      raise "Can't init Creatubbles::Client ! Missing: #{missing.keys.join(',')}"
+    end
+  end
+
   def initialize(client_id: nil, client_secret: nil, username: nil, password: nil, api_url: Creatubbles::DEFAULT_API_URL, scope: nil)
     @client_id = client_id
     @client_secret = client_secret

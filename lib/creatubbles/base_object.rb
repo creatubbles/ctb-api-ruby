@@ -65,4 +65,8 @@ class Creatubbles::BaseObject
     @data = @connection.get("#{self.class.type_name}/#{id}").parsed['data']
     self
   end
+
+  def init_objects(response)
+    Creatubbles.instantiate_objects_from_response(response, @connection)
+  end
 end
