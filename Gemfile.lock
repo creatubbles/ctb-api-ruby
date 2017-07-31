@@ -13,23 +13,38 @@ GEM
       i18n (~> 0.7)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
+    addressable (2.5.1)
+      public_suffix (~> 2.0, >= 2.0.2)
+    coderay (1.1.1)
     concurrent-ruby (1.0.4)
+    crack (0.4.3)
+      safe_yaml (~> 1.0.0)
     diff-lcs (1.2.5)
     faraday (0.10.1)
       multipart-post (>= 1.2, < 3)
+    hashdiff (0.3.4)
     i18n (0.8.0)
     jwt (1.5.6)
+    method_source (0.8.2)
     minitest (5.10.1)
     multi_json (1.12.1)
     multi_xml (0.6.0)
     multipart-post (2.0.0)
+    mustermann (1.0.0)
     oauth2 (1.3.0)
       faraday (>= 0.8, < 0.11)
       jwt (~> 1.0)
       multi_json (~> 1.3)
       multi_xml (~> 0.5)
       rack (>= 1.2, < 3)
+    pry (0.10.4)
+      coderay (~> 1.1.0)
+      method_source (~> 0.8.1)
+      slop (~> 3.4)
+    public_suffix (2.0.5)
     rack (2.0.1)
+    rack-protection (2.0.0)
+      rack
     rake (11.2.2)
     rspec (3.5.0)
       rspec-core (~> 3.5.0)
@@ -44,17 +59,35 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.5.0)
     rspec-support (3.5.0)
+    safe_yaml (1.0.4)
+    sinatra (2.0.0)
+      mustermann (~> 1.0)
+      rack (~> 2.0)
+      rack-protection (= 2.0.0)
+      tilt (~> 2.0)
+    slop (3.6.0)
     thread_safe (0.3.5)
+    tilt (2.0.8)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
+    webmock (3.0.1)
+      addressable (>= 2.3.6)
+      crack (>= 0.3.2)
+      hashdiff
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   creatubbles!
+  pry
   rake
   rspec
+  sinatra
+  webmock
+
+RUBY VERSION
+   ruby 2.4.1p111
 
 BUNDLED WITH
-   1.14.3
+   1.15.3
